@@ -1,0 +1,452 @@
+body { 
+    font-family: 'Segoe UI', Tahoma, sans-serif; 
+    background-image: url('background.jpeg'); 
+    margin: 0; 
+    direction: rtl; 
+}
+
+.container { 
+    max-width: 800px; 
+    margin: 20px auto; 
+    background: white; 
+    padding: 20px; 
+    border-radius: 20px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+}
+
+/* الهيدر والنوافذ */
+.patient-header { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    margin-bottom: 20px; 
+}
+
+.logo-small { 
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+}
+
+.patient-nav { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex; 
+    background: #f8f9fa; 
+    border-radius: 12px; 
+    padding: 5px; 
+    margin-bottom: 20px; 
+    transition: 0.3s;
+}
+.patient-nav i { 
+    font-family: "Font Awesome 5 Free" !important; 
+    font-weight: 900; }
+
+.nav-item { 
+    flex: 1; 
+    background: none; 
+    border: none; 
+    padding: 10px; 
+    cursor: pointer; 
+    color: #666; 
+    transition: 0.3s; 
+    position: relative;
+}
+
+
+.nav-item.active { 
+    background: white; 
+    color: #f7a600; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+    background-color: #e3f2fd; 
+    border-bottom: 3px solid #007bff; 
+}
+
+/* تصميم الفلتر والبحث الجديد */
+.filter-wrapper { 
+    display: flex; 
+    gap: 10px; 
+    margin-bottom: 25px; 
+    align-items: center; 
+}
+
+.search-section { 
+    position: relative; 
+    flex: 2; 
+}
+
+.search-icon { 
+    position: absolute; 
+    right: 15px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    color: #bdc3c7; 
+}
+
+#doctor-search { 
+    width: 90%; 
+    padding: 12px 40px 12px 15px; 
+    border: 2px solid #eee; 
+    border-radius: 12px; 
+    outline: none; 
+    transition: 0.3s; 
+}
+
+#doctor-search:focus { 
+    border-color: #f7a600; 
+}
+
+.filter-section { 
+    flex: 1; 
+}
+
+#spec-filter { 
+    width: 100%; 
+    padding: 12px; 
+    border: 2px solid #eee; 
+    border-radius: 12px; 
+    outline: none; 
+    cursor: pointer; 
+    background: #fff; 
+    font-family: inherit; 
+}
+
+#spec-filter:focus { 
+    border-color: #f7a600; 
+}
+
+/* الكروت */
+.doc-card { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 15px; 
+    border: 1px solid #eee; 
+    border-radius: 15px; 
+    margin-bottom: 12px; 
+    transition: 0.3s; 
+}
+
+.doc-card:hover { 
+    transform: translateX(-5px); 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+}
+
+.doc-info h5 { 
+    margin: 0; 
+    font-size: 16px; 
+}
+
+.doc-info span { 
+    color: #f7a600; 
+    font-size: 13px; 
+}
+
+.btn-book { 
+    background: #27ae60; 
+    color: white; 
+    border: none; 
+    padding: 8px 15px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: bold; 
+}
+
+.btn-book:disabled { 
+    background: #bdc3c7; 
+}
+
+.hidden { 
+    display: none !important; 
+}
+
+.divider { 
+    border: 0; 
+    height: 1px; 
+    background: #eee; 
+    margin-bottom: 20px; 
+}
+
+.btn-logout { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-size: 15px;
+    font-weight: 600;
+    background: #d81803; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: 0.3s;
+}
+
+/* عشان الأيقونة اللي جوه الزرار متتأثرش بملف الخط */
+.btn-logout i {
+    font-family: "Font Awesome 5 Free" !important; 
+    font-weight: 900;
+}
+
+/* --- أنيميشن الانتقال بين التابات --- */
+
+@keyframes tabEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tab-content:not(.hidden) {
+    display: block;
+    animation: tabEntrance 0.4s ease-out forwards;
+}
+
+.nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 25%;
+    width: 50%;
+    height: 3px;
+    background: #f7a600;
+    border-radius: 10px;
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* كلاس الأنيميشن */
+.scale-animation {
+    animation: fadeInUp 0.9s ease-out forwards;
+}
+
+/* التأكد من الإخفاء التام */
+.hidden {
+    display: none !important;
+}
+
+
+
+/* --- أنيميشن التنقل --- */
+@keyframes slideFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* تطبيق الأنيميشن على التبويب النشط */
+.tab-content:not(.hidden) {
+    display: block;
+    animation: slideFade 0.4s ease-out forwards;
+}
+
+/* تجميل شكل التبويبات عند النقر */
+.nav-item {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item.active {
+    transform: scale(1.05);
+    border-bottom: 2px solid #f7a600; /* خط سفلي بسيط للتمييز */
+}
+/* ============================================
+   الوضع الليلي - تصميم احترافي للمريض
+   ============================================ */
+
+body.dark-theme {
+    background-color: #0f1117;
+    background-image: none;
+    color: #e2e8f0;
+}
+
+body.dark-theme .container {
+    background: #1a1d27;
+    color: #e2e8f0;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+/* شريط التنقل السفلي */
+body.dark-theme .patient-nav {
+    background: #1a1d27;
+    border-top: 1px solid #2a2f45;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+}
+body.dark-theme .nav-item {
+    color: #5a6480;
+}
+body.dark-theme .nav-item.active {
+    color: #6d9cf8;
+    border-bottom-color: #4f7cde;
+}
+body.dark-theme .nav-item i {
+    color: inherit;
+}
+
+/* العناوين */
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4 {
+    color: #f0f4ff;
+}
+
+/* حقول البحث والفلتر */
+body.dark-theme #doctor-search,
+body.dark-theme #spec-filter {
+    background: #252836;
+    border-color: #363b52;
+    color: #e2e8f0;
+}
+body.dark-theme #doctor-search::placeholder {
+    color: #5a6480;
+}
+body.dark-theme #doctor-search:focus,
+body.dark-theme #spec-filter:focus {
+    border-color: #4f7cde;
+    box-shadow: 0 0 0 3px rgba(79,124,222,0.15);
+}
+
+/* بطاقة الملف الشخصي */
+body.dark-theme .profile-card {
+    background: #252836;
+    border-color: #363b52;
+    color: #e2e8f0;
+}
+body.dark-theme .detail-item label {
+    color: #93a8d4;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+body.dark-theme .detail-item span {
+    color: #cdd6f0;
+}
+
+/* بطاقات الأطباء */
+body.dark-theme .doc-card {
+    background: #252836;
+    border: 1px solid #363b52;
+    color: #e2e8f0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+body.dark-theme .doc-card:hover {
+    box-shadow: 0 8px 28px rgba(79,124,222,0.2);
+    transform: translateY(-2px);
+}
+body.dark-theme .doc-card h3 {
+    color: #c9d6f0;
+}
+body.dark-theme .doc-card p,
+body.dark-theme .doc-card span {
+    color: #7c8db5;
+}
+body.dark-theme .doc-card .doc-specialty {
+    color: #6d9cf8;
+}
+body.dark-theme .doc-card .doc-price {
+    color: #6ed8a0;
+}
+body.dark-theme .doc-card .doc-rating {
+    color: #f0c040;
+}
+
+/* بطاقات المواعيد */
+body.dark-theme .appointment-card {
+    background: #252836;
+    border: 1px solid #363b52;
+    color: #e2e8f0;
+}
+body.dark-theme .appointment-card .appt-doctor {
+    color: #6d9cf8;
+}
+body.dark-theme .appointment-card .appt-time {
+    color: #7c8db5;
+}
+
+/* الإدخالات */
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+    background: #252836;
+    color: #e2e8f0;
+    border-color: #363b52;
+}
+body.dark-theme input::placeholder {
+    color: #5a6480;
+}
+body.dark-theme input:focus,
+body.dark-theme select:focus {
+    border-color: #4f7cde;
+    box-shadow: 0 0 0 3px rgba(79,124,222,0.15);
+    outline: none;
+}
+
+/* المودال */
+body.dark-theme .modal-content {
+    background: #1a1d27;
+    color: #e2e8f0;
+    border: 1px solid #363b52;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+}
+body.dark-theme .modal-content h3 {
+    color: #f0f4ff;
+    border-bottom: 1px solid #2a2f45;
+    padding-bottom: 10px;
+}
+body.dark-theme .modal-content label {
+    color: #93a8d4;
+}
+
+/* زر الثيم */
+body.dark-theme #theme-toggle {
+    background: #252836;
+    border-color: #363b52;
+    color: #f0c040;
+}
+body.dark-theme #theme-toggle:hover {
+    background: #2e3350;
+    border-color: #4f7cde;
+}
+
+/* الأزرار العامة */
+body.dark-theme .btn-outline {
+    border-color: #363b52;
+    color: #7c8db5;
+}
+body.dark-theme .btn-outline:hover {
+    background: #252836;
+    color: #6d9cf8;
+    border-color: #4f7cde;
+}
+
+/* قسم تغيير كلمة السر للمريض */
+body.dark-theme #patient-change-pass-toggle span {
+    color: #6d9cf8 !important;
+}
+body.dark-theme #patient-change-pass-toggle i {
+    color: #6d9cf8 !important;
+}
+body.dark-theme #patient-change-pass-form {
+    border-top-color: #2a2f45;
+}
+body.dark-theme div[style*="border-top: 1px solid #e8ecf0"] {
+    border-top-color: #2a2f45 !important;
+}

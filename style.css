@@ -1,0 +1,537 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-image: url('background.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.dashboard-container {
+    max-width: 2000px;
+}
+
+/* --- أنيميشن احترافي --- */
+.card-scale {
+    animation: cardEntrance 0.7s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards;
+}
+
+@keyframes cardEntrance {
+    0% { opacity: 0; transform: scale(0.8) translateY(50px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.fade-animation {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.scale-animation {
+    animation: scaleIn 0.4s ease-out;
+}
+
+@keyframes scaleIn {
+    0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    100% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+}
+
+.hidden { display: none !important; }
+
+/* تبويبات جذابة */
+.auth-tabs {
+    display: flex;
+    margin-bottom: 25px;
+    background: #f1f3f5;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.4s ease;
+}
+
+.tab-btn.active {
+    background: #fff;
+    color: #f7a600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* مدخلات البيانات */
+.input-group { text-align: right; margin-bottom: 15px; }
+label { display: block; margin-bottom: 5px; color: #333; font-weight: bold; }
+input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; transition: all 0.3s ease; }
+input:focus, select:focus { border-color: #f7a600; box-shadow: 0 0 8px rgba(247, 166, 0, 0.2); outline: none; }
+
+/* الأزرار */
+.btn { width: 100%; padding: 12px; background-color: #f7a600; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
+.btn:hover { background-color: #d68f00; transform: translateY(-2px); }
+
+.btn-outline { background: none; border: 2px solid #f7a600; color: #f7a600; width: auto; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+.btn-outline:hover { background: #f7a600; color: white; }
+
+.redirect-box { margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+
+/* صندوق إيقاف الحجز */
+.booking-status-box { background: #e8f4fd; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+.booking-status-box p { font-weight: bold; color: #0b3b60; }
+.btn-orange { background-color: #f7a600; width: auto; }
+.btn-gray { background-color: #6c757d; width: auto; }
+
+/* الباقي من كود الداشبورد القديم (مرتب ومنظم) */
+.stats-container { display: flex; justify-content: space-around; margin-bottom: 20px; gap: 15px; }
+.stat-box { flex: 1; padding: 15px; border-radius: 10px; color: white; }
+.stat-waiting { background: linear-gradient(45deg, #f39c12, #f1c40f); }
+.stat-examined { background: linear-gradient(45deg, #27ae60, #2ecc71); }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; border-radius: 10px; overflow: hidden; }
+th, td { padding: 12px; border: 1px solid #eee; text-align: center; }
+th { background-color: #f8f9fa; color: #0b3b60; }
+.status-btn { padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+.status-waiting { background-color: #fff3cd; color: #856404; }
+.status-examined { background-color: #d4edda; color: #155724; }
+.add-emergency { background: #ffeeba; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
+.add-emergency input { flex: 1; }
+/* اللوجو الكبير في صفحة التسجيل */
+.logo {
+    width: 120px !important; /* الـ !important بتضمن إن الحجم يتنفذ غصب عن أي حاجة */
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: contain; /* عشان الصورة متبقاش ممطوطة */
+    display: inline-block;
+}
+
+/* التأكد من أن الحاوية لا تتوسع بسبب الصور */
+.container {
+    overflow: hidden; /* أي حاجة تخرج برا حدود الكارت تختفي */
+    max-width: 450px;
+    width: 90%; /* عشان يظبط على الموبايل */
+}
+.logo-small {
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    display: block;
+}
+/* --- تعديل الحاوية لتكون مرنة --- */
+.dashboard-container {
+    width: 95%;
+    max-width: 1200px; /* بالعرض على الكمبيوتر */
+    transition: all 0.4s ease;
+}
+
+/* --- ضبط الأزرار والفلاتر --- */
+.controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: wrap; /* عشان ينزلوا تحت بعض في الموبايل */
+}
+
+.search-box { flex: 2; min-width: 250px; }
+.filters-group { flex: 1; display: flex; gap: 5px; justify-content: flex-end; }
+
+.filter-btn {
+    padding: 8px 15px;
+    border: 1px solid #f7a600;
+    background: white;
+    color: #f7a600;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+    background: #f7a600;
+    color: white;
+}
+
+/* --- تجميل زرار الحذف --- */
+.delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(255, 77, 77, 0.3);
+    transition: 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+}
+
+/* --- ميديا كويري: للموبايل (أقل من 768px) --- */
+@media (max-width: 767px) {
+    .dashboard-container {
+        max-width: 450px; /* يرجع كارت بالطول */
+        padding: 15px;
+    }
+    
+    .controls-row {
+        flex-direction: column; /* البحث والفلاتر فوق بعض */
+        align-items: stretch;
+    }
+    
+    .filters-group {
+        justify-content: center;
+    }
+
+    /* جعل الجدول قابل للتمرير في الموبايل */
+    .patients-list {
+        overflow-x: auto;
+    }
+    
+    table {
+        font-size: 14px;
+    }
+}
+/* --- تعديل قسم الطوارئ لضبط حجم الزر --- */
+.add-emergency {
+    background: #ffeeba;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: nowrap; /* لضمان بقاء الزر بجانب الحقل في الشاشات الواسعة */
+}
+
+.add-emergency input {
+    flex: 2; /* جعل حقل الإدخال يأخذ مساحة أكبر */
+    min-width: 150px;
+}
+
+.btn-red {
+    background-color: #d9534f;
+    color: white;
+    width: auto; /* هذا هو السطر الأهم لتقليل الحجم */
+    padding: 10px 20px; /* مساحة داخلية مناسبة */
+    white-space: nowrap; /* يمنع النص من الانقسام لسطرين */
+    flex: 0.5; /* يعطي الزر حجم أصغر مقارنة بحقل الإدخال */
+}
+
+.btn-red:hover {
+    background-color: #c9302c;
+}
+
+/* تعديل للموبايل لضمان التناسق */
+@media (max-width: 500px) {
+    .add-emergency {
+        flex-direction: column; /* ينزلوا تحت بعض في الشاشات الصغيرة جداً */
+        align-items: stretch;
+    }
+    .btn-red {
+        width: 100%; /* يأخذ العرض الكامل فقط في الموبايل لسهولة الضغط */
+    }
+}
+/* --- تنسيق إعدادات العيادة (السعر) --- */
+.clinic-settings { 
+    background: #e8f4fd; 
+    padding: 15px; 
+    border-radius: 10px; 
+    margin-bottom: 20px; 
+    display: flex; 
+    gap: 10px; 
+    align-items: center; 
+}
+.clinic-settings h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #0b3b60;
+    white-space: nowrap;
+}
+.clinic-settings input { 
+    flex: 1; 
+    min-width: 120px;
+}
+
+/* --- أزرار الإجراءات الجديدة (تأكيد وروشتة) --- */
+.action-btn {
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    border: none;
+    margin: 2px;
+    transition: 0.3s;
+}
+.btn-confirm {
+    background-color: #27ae60;
+    color: white;
+}
+.btn-confirm:hover { background-color: #219150; }
+.btn-confirmed {
+    background-color: transparent;
+    color: #27ae60;
+    border: 1px solid #27ae60;
+    cursor: default;
+}
+.btn-rx {
+    background-color: #3498db;
+    color: white;
+}
+.btn-rx:hover { background-color: #2980b9; }
+
+/* للموبايل */
+@media (max-width: 500px) {
+    .clinic-settings {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+/* ============================================
+   الوضع الليلي - تصميم احترافي للدكتور
+   ============================================ */
+
+body.dark-theme {
+    background-color: #0f1117;
+    background-image: none;
+    color: #e2e8f0;
+}
+
+/* الحاوية الرئيسية */
+body.dark-theme .container {
+    background: #1a1d27;
+    color: #e2e8f0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+/* عناوين وأوصاف */
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4 {
+    color: #f0f4ff;
+}
+
+body.dark-theme #doc-specialty-display {
+    color: #7c8db5 !important;
+}
+
+body.dark-theme #welcome-msg {
+    color: #c9d6f0;
+}
+
+/* الليبل */
+body.dark-theme label {
+    color: #93a8d4;
+}
+
+/* الإدخالات */
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+    background: #252836;
+    color: #e2e8f0;
+    border-color: #363b52;
+    box-shadow: none;
+}
+body.dark-theme input::placeholder {
+    color: #5a6480;
+}
+body.dark-theme input:focus,
+body.dark-theme select:focus {
+    border-color: #4f7cde;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79,124,222,0.15);
+}
+
+/* تابات تسجيل الدكتور */
+body.dark-theme .auth-tabs {
+    background: #252836;
+    border-bottom: 1px solid #363b52;
+}
+body.dark-theme .tab-btn {
+    color: #7c8db5;
+}
+body.dark-theme .tab-btn.active {
+    background: #1a1d27;
+    color: #6d9cf8;
+    border-bottom: 2px solid #4f7cde;
+}
+
+/* قسم تعديل الملف الشخصي */
+body.dark-theme #edit-profile-section {
+    background: #252836 !important;
+    border-color: #363b52 !important;
+}
+body.dark-theme #edit-profile-toggle-btn {
+    color: #6d9cf8 !important;
+}
+body.dark-theme #edit-profile-form input {
+    background: #1a1d27;
+    border-color: #363b52;
+    color: #e2e8f0;
+}
+body.dark-theme #edit-profile-form > div > div[style*="border-top"] {
+    border-top-color: #363b52 !important;
+}
+body.dark-theme #edit-profile-form div[style*="color:#2980b9"] {
+    color: #6d9cf8 !important;
+}
+body.dark-theme #edit-profile-form > div > div[style*="background:#e8f2ff"] {
+    background: #1a2236 !important;
+    border-color: #2a3a5a !important;
+}
+
+/* إعدادات العيادة */
+body.dark-theme .clinic-schedule-settings {
+    border-color: #363b52 !important;
+    background: #1e2130;
+}
+
+body.dark-theme .booking-status-box,
+body.dark-theme .add-emergency,
+body.dark-theme .clinic-settings {
+    background: #252836;
+    color: #e2e8f0;
+    border-color: #363b52;
+}
+
+/* الإحصائيات */
+body.dark-theme .stat-box {
+    border: 1px solid #363b52;
+}
+body.dark-theme .stat-waiting {
+    background: linear-gradient(135deg, #1e2d45, #1a253a) !important;
+    color: #7eb8f7 !important;
+}
+body.dark-theme .stat-examined {
+    background: linear-gradient(135deg, #1a2e24, #162420) !important;
+    color: #6ed8a0 !important;
+}
+body.dark-theme .stat-box h4 { color: inherit; }
+body.dark-theme .stat-box span { color: inherit; }
+
+/* منطقة إضافة المرضى */
+body.dark-theme .bg-emergency {
+    background: #2a1e2a !important;
+    border: 1px solid #4a2a3a;
+}
+body.dark-theme .bg-regular {
+    background: #1a2a1e !important;
+    border: 1px solid #2a4a2e;
+}
+
+/* شريط البحث والفلاتر */
+body.dark-theme .filter-btn {
+    background: #252836;
+    color: #7c8db5;
+    border-color: #363b52;
+}
+body.dark-theme .filter-btn.active {
+    background: #2a3a6a;
+    color: #6d9cf8;
+    border-color: #4f7cde;
+}
+
+/* الجدول */
+body.dark-theme table {
+    background: #1a1d27;
+    color: #e2e8f0;
+    border: 1px solid #363b52;
+    border-radius: 10px;
+    overflow: hidden;
+}
+body.dark-theme th {
+    background: #252836;
+    color: #93a8d4;
+    border-bottom: 1px solid #363b52;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+body.dark-theme td {
+    border-color: #2a2f45;
+    color: #cdd6f0;
+}
+body.dark-theme tr:hover td {
+    background: #20243a;
+}
+
+/* أزرار الإجراءات في الجدول */
+body.dark-theme .btn-confirm {
+    background: #1a3a2a;
+    color: #6ed8a0;
+    border: 1px solid #2a5a3a;
+}
+body.dark-theme .btn-rx {
+    background: #1a2a45;
+    color: #7eb8f7;
+    border: 1px solid #2a4a6a;
+}
+
+/* زر الثيم */
+body.dark-theme #theme-toggle {
+    background: #252836;
+    border-color: #363b52;
+    color: #f0c040;
+}
+body.dark-theme #theme-toggle:hover {
+    background: #2e3350;
+    border-color: #4f7cde;
+}
+
+/* تسجيل الخروج */
+body.dark-theme .btn-logout {
+    background: #2a1a1a;
+    color: #f08080;
+    border: 1px solid #4a2a2a;
+}
+body.dark-theme .btn-logout:hover {
+    background: #3a2020;
+}
+
+/* أزرار عامة في الوضع الليلي */
+body.dark-theme .btn-outline {
+    border-color: #363b52;
+    color: #7c8db5;
+}
+body.dark-theme .btn-outline:hover {
+    background: #252836;
+    color: #6d9cf8;
+    border-color: #4f7cde;
+}

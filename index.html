@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة العيادة الذكية | HealthHub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="fade-animation">
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+        <button id="theme-toggle" class="btn-outline" style="border-radius: 50%; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <div id="doctor-auth-section" class="container card-scale">
+        <img src="logo.jpeg" alt="HealthHub Logo" class="logo">
+        <h2 style="margin-bottom: 20px;">بوابة الطبيب</h2>
+        
+        <div class="auth-tabs">
+            <button id="doc-login-tab" class="tab-btn active" onclick="switchDocTab('login')">تسجيل الدخول</button>
+            <button id="doc-reg-tab" class="tab-btn" onclick="switchDocTab('register')">حساب جديد</button>
+        </div>
+
+        <form id="doc-form" class="fade-animation">
+            <div id="doc-register-fields" class="hidden scale-animation">
+                <div class="input-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" id="doc-name" placeholder="د. أحمد محمد">
+                </div>
+                <div class="input-group">
+                    <label>التخصص</label>
+                    <select id="doc-specialty">
+                        <option value="" disabled selected>اختر تخصصك...</option>
+                        <option value="باطنة">باطنة عامة</option>
+                        <option value="نساء وتوليد">نساء وتوليد</option>
+                        <option value="أطفال">طب الأطفال</option>
+                        <option value="جراحة">جراحة عامة</option>
+                        <option value="مخ واعصاب">مخ واعصاب</option>
+                        <option value="اسنان">اسنان</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>الرقم القومي (14 رقم)</label>
+                <input type="number" id="doc-nid" required placeholder="أدخل 14 رقم" maxlength="14">
+            </div>
+            <div class="input-group">
+                <label>كلمة السر</label>
+                <input type="password" id="doc-password" required placeholder="********">
+            </div>
+            <div id="doc-confirm-group" class="input-group hidden">
+                <label>تأكيد كلمة السر</label>
+                <input type="password" id="doc-confirm-password" placeholder="********">
+            </div>
+
+            <p id="doc-error-msg" class="error"></p>
+            <button type="submit" id="doc-submit-btn" class="btn">تسجيل الدخول</button>
+        </form>
+
+        <div class="redirect-box">
+            <p>هل أنت مريض وتبحث عن حجز؟</p>
+            <button class="btn-outline" onclick="goToSection('patient')">دخول المرضى</button>
+        </div>
+    </div>
+
+    <div id="patient-auth-section" class="container card-scale hidden">
+        <img src="logo.jpeg" alt="HealthHub Logo" class="logo">
+        <h2 style="margin-bottom: 20px;">بوابة المريض</h2>
+        
+        <div class="auth-tabs">
+            <button id="pat-login-tab" class="tab-btn active" onclick="switchPatTab('login')">تسجيل الدخول</button>
+            <button id="pat-reg-tab" class="tab-btn" onclick="switchPatTab('register')">حساب جديد</button>
+        </div>
+
+        <form id="pat-form" class="fade-animation">
+            <div id="pat-register-fields" class="hidden scale-animation">
+                <div class="input-group">
+                    <label>اسم المريض</label>
+                    <input type="text" id="pat-name" placeholder="أدخل اسمك">
+                </div>
+                <div class="input-group">
+                    <label>رقم الهاتف</label>
+                    <input type="text" id="pat-phone" placeholder="01xxxxxxxxx">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>الرقم القومي (14 رقم)</label>
+                <input type="number" id="pat-nid" required placeholder="أدخل 14 رقم" maxlength="14">
+            </div>
+            <div class="input-group">
+                <label>كلمة السر</label>
+                <input type="password" id="pat-password" required placeholder="********">
+            </div>
+            <div id="pat-confirm-group" class="input-group hidden">
+                <label>تأكيد كلمة السر</label>
+                <input type="password" id="pat-confirm-password" placeholder="********">
+            </div>
+
+            <p id="pat-error-msg" class="error"></p>
+            <button type="submit" id="pat-submit-btn" class="btn">تسجيل الدخول</button>
+        </form>
+
+        <div class="redirect-box">
+            <p>خاص بالأطباء فقط</p>
+            <button class="btn-outline" onclick="goToSection('doctor')">دخول الأطباء</button>
+        </div>
+    </div>
+
+    <div id="doc-dashboard-section" class="container dashboard-container hidden card-scale">
+        <img src="logo.jpeg" alt="HealthHub Logo" class="logo-small">
+        <h2 id="welcome-msg">مرحباً دكتور <span id="doc-name-display"></span></h2>
+        <p id="doc-specialty-display" style="margin: -8px 0 12px; color: #5a7a9a; font-size: 14px; font-weight: 500;"></p>
+
+        <!-- صورة الدكتور في الشاشة الرئيسية (بدون أزرار رفع/حذف) -->
+        <div style="display:flex; align-items:center; gap:14px; padding:12px 16px; background:#f0f7ff; border-radius:14px; margin-bottom:12px; border:1px dashed #b3d0f5;">
+            <div style="position:relative; flex-shrink:0;">
+                <img id="doctor-clinic-photo" src="https://via.placeholder.com/72" alt="صورة الدكتور"
+                    style="width:72px; height:72px; border-radius:50%; object-fit:cover; border:3px solid #3498db; background:#e9ecef;">
+            </div>
+            <div>
+                <div style="font-weight:600; font-size:15px; color:#2c3e50;" id="photo-section-name"></div>
+                <div style="font-size:13px; color:#7c8db5;" id="photo-section-specialty"></div>
+            </div>
+        </div>
+
+        <!-- قسم تعديل الملف الشخصي (الاسم + التخصص + الصورة) -->
+        <div id="edit-profile-section" style="margin-bottom:16px; background:#f0f7ff; border:1px dashed #b3d0f5; border-radius:14px; overflow:hidden;">
+            <button onclick="toggleEditProfile()" id="edit-profile-toggle-btn"
+                style="width:100%; background:none; border:none; padding:12px 16px; display:flex; align-items:center; gap:8px; cursor:pointer; font-size:14px; font-weight:600; color:#2980b9; text-align:right; justify-content:flex-end;">
+                <i class="fas fa-user-edit"></i> تعديل بياناتي
+                <i class="fas fa-chevron-down" id="edit-profile-chevron" style="margin-right:auto; transition:transform 0.3s;"></i>
+            </button>
+            <div id="edit-profile-form" style="display:none; padding:0 16px 16px;">
+                <div style="display:flex; flex-direction:column; gap:12px;">
+
+                    <!-- أزرار الصورة فقط جوه القائمة -->
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; padding:8px 0 4px;">
+                        <label for="doctor-photo-upload" style="cursor:pointer; background:#3498db; color:white; border:none; padding:8px 14px; border-radius:9px; font-size:13px; display:inline-flex; align-items:center; gap:5px;">
+                            <i class="fas fa-upload"></i> رفع صورة
+                            <input type="file" id="doctor-photo-upload" hidden accept="image/*" onchange="handleDoctorPhotoUpload(event)">
+                        </label>
+                        <button onclick="removeDoctorPhoto()" id="remove-doctor-photo-btn" style="display:none; background:#fee2e2; color:#e74c3c; border:none; padding:8px 14px; border-radius:9px; font-size:13px; cursor:pointer;">
+                            <i class="fas fa-trash"></i> حذف الصورة
+                        </button>
+                    </div>
+
+                    <!-- الاسم -->
+                    <div>
+                        <label style="font-size:12px; color:#5a7a9a; display:block; margin-bottom:4px;">الاسم</label>
+                        <input type="text" id="edit-doctor-name" placeholder="اسمك الكامل..."
+                            style="width:100%; box-sizing:border-box; padding:9px 12px; border:1px solid #cde; border-radius:9px; font-size:14px;">
+                    </div>
+
+                    <!-- التخصص -->
+                    <div>
+                        <label style="font-size:12px; color:#5a7a9a; display:block; margin-bottom:4px;">التخصص</label>
+                        <input type="text" id="edit-doctor-specialty" placeholder="تخصصك الطبي..."
+                            style="width:100%; box-sizing:border-box; padding:9px 12px; border:1px solid #cde; border-radius:9px; font-size:14px;">
+                    </div>
+
+                    <button onclick="saveProfileChanges()"
+                        style="background:#2980b9; color:white; border:none; padding:10px; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+                        <i class="fas fa-save"></i> حفظ التغييرات
+                    </button>
+                    <p id="edit-profile-msg" style="text-align:center; font-size:13px; margin:0;"></p>
+
+                    <!-- قسم تغيير كلمة السر -->
+                    <div style="border-top:1px solid #cde; margin-top:4px; padding-top:12px;">
+                        <div onclick="toggleDoctorChangePass()" id="doctor-change-pass-toggle"
+                            style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; padding:4px 0 10px;">
+                            <span style="font-size:13px; font-weight:600; color:#2980b9;">
+                                <i class="fas fa-lock" style="margin-left:5px;"></i>تغيير كلمة السر
+                            </span>
+                            <i class="fas fa-chevron-down" id="doctor-pass-chevron" style="color:#2980b9; transition:transform 0.3s;"></i>
+                        </div>
+                        <div id="doctor-change-pass-form" style="display:none; flex-direction:column; gap:8px;">
+                            <div>
+                                <label style="font-size:12px; color:#5a7a9a; display:block; margin-bottom:4px;">كلمة السر الحالية</label>
+                                <input type="password" id="old-password" placeholder="ادخل كلمة السر الحالية..."
+                                    style="width:100%; box-sizing:border-box; padding:9px 12px; border:1px solid #cde; border-radius:9px; font-size:14px;">
+                            </div>
+                            <div>
+                                <label style="font-size:12px; color:#5a7a9a; display:block; margin-bottom:4px;">كلمة السر الجديدة</label>
+                                <input type="password" id="new-password" placeholder="كلمة السر الجديدة..."
+                                    style="width:100%; box-sizing:border-box; padding:9px 12px; border:1px solid #cde; border-radius:9px; font-size:14px;">
+                            </div>
+                            <div>
+                                <label style="font-size:12px; color:#5a7a9a; display:block; margin-bottom:4px;">تأكيد كلمة السر الجديدة</label>
+                                <input type="password" id="confirm-new-password" placeholder="أعد كتابة كلمة السر..."
+                                    style="width:100%; box-sizing:border-box; padding:9px 12px; border:1px solid #cde; border-radius:9px; font-size:14px;">
+                            </div>
+                            <button onclick="changePassword()"
+                                style="background:#27ae60; color:white; border:none; padding:10px; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+                                <i class="fas fa-key"></i> تغيير كلمة السر
+                            </button>
+                            <p id="change-password-msg" style="text-align:center; font-size:13px; margin:0;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="clinic-schedule-settings" style="margin-top: 20px; padding: 15px; border: 1px solid #eee; border-radius: 12px;">
+            <h3> اضافه سعر💵💵</h3>
+            <div class="clinic-settings" style="margin-bottom: 15px;">
+                <input type="number" id="clinic-price" placeholder="حدد سعر الكشف (ج.م)..." style="margin-bottom: 10px;">
+                <button onclick="updateDoctorPrice()" class="btn" style="width: 100%; background-color: #27ae60; color: white;">تحديث سعر الكشف 💰</button>
+            </div>
+            <h3>📅 تنظيم مواعيد العمل</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3>مواعيد العيادة الأسبوعية</h3>
+                <button id="toggle-schedule-btn" class="btn-outline" onclick="toggleScheduleList()">إخفاء القائمة</button>
+            </div>
+            <div id="weekly-schedule-inputs" class="scale-animation"></div>
+            <button onclick="saveWeeklySchedule()" class="btn btn-orange" style="width: 100%; margin-top: 10px;">حفظ مواعيد العمل</button>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-box stat-waiting">
+                <h4>في الانتظار</h4>
+                <span id="count-waiting">0</span>
+            </div>
+            <div class="stat-box stat-examined">
+                <h4>تم الكشف</h4>
+                <span id="count-examined">0</span>
+            </div>
+        </div>
+
+        <div class="add-patient-sections" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+            <div class="add-patient-row bg-emergency" style="padding: 10px; border-radius: 8px; background: #d19797;">
+                <input type="text" id="emergency-name" placeholder="اسم مريض الطوارئ..." style="width: 100%; margin-bottom: 5px;">
+                <button onclick="addEmergencyPatient()" class="btn btn-red" style="width: 100%;">إضافة طوارئ</button>
+            </div>
+
+            <div class="add-patient-row bg-regular" style="padding: 10px; border-radius: 8px; background: #cffccf;">
+                <input type="text" id="regular-name" placeholder="اسم مريض عادي..." style="width: 100%; margin-bottom: 5px;">
+                <button onclick="addRegularPatient()" class="btn" style="background-color: #28a745; color: white; width: 100%;">إضافة عادي</button>
+            </div>
+        </div>
+
+        <div class="controls-row" style="margin-top: 20px;">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="ابحث عن مريض بالاسم..." oninput="filterPatients()">
+            </div>
+            <div class="filters-group" style="margin-top: 10px; display: flex; gap: 5px;">
+                <button class="filter-btn active" onclick="setFilter('الكل')">الكل</button>
+                <button class="filter-btn" onclick="setFilter('طوارئ')">طوارئ</button>
+                <button class="filter-btn" onclick="setFilter('حجز عادي')">عادي</button>
+            </div>
+        </div>
+
+        <div class="patients-list" style="margin-top: 20px;">
+            <h3>قائمة المرضى اليوم</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>الاسم</th>
+                        <th>النوع</th>
+                        <th>إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="patients-table-body"></tbody>
+            </table>
+        </div>
+
+        <div class="history-controls" style="margin-top: 20px; display: flex; gap: 10px;">
+            <button onclick="confirmEndDay()" class="btn" style="background-color: #b82525; flex: 1;">إنهاء اليوم</button>
+            <button onclick="showHistory()" class="btn" style="background-color: #17a2b8; flex: 1;">السجل</button>
+        </div>
+
+        <button onclick="logout()" class="btn btn-logout" style="margin-top: 20px;">تسجيل خروج</button>
+    </div>
+
+    <div id="history-section" class="container dashboard-container hidden card-scale">
+        <h2 style="margin-bottom: 20px;">سجل الأيام السابقة</h2>
+        <div id="history-content" style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;"></div>
+        <button onclick="hideHistory()" class="btn" style="background-color: #6c757d; color: white;">العودة للوحة التحكم</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
